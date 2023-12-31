@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Your existing styles here */
+    body {
+      margin: 0;
+      overflow: hidden;
+      transition: filter 60s;
+      filter: brightness(90%);
+    }
+
+    .moon, .sun {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      transition: opacity 15s, filter 20s;
+    }
+
+    .moon {
+      opacity: 1;
+    }
+
+    .sun {
+      opacity: 0;
+    }
+
+    .message-container {
+      position: absolute;
+      top: 0%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      color: #333333;
+      font-size: 1.6em;
+      font-weight: bold;
+      font-family: 'Garamond', serif;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 85%;
+      opacity: 0;
+      line-height: 0.7;
+    }
+
+    .message-container p {
+      text-decoration: none;
+      cursor: none;
+    }
+
+    @keyframes typing {
+      0% {
+        width: 0;
+        opacity: 0;
+      }
+      20% {
+        width: 0;
+        opacity: 0.5;
+      }
+      40% {
+        width: 0;
+        opacity: 1;
+      }
+      60% {
+        width: 100%;
+        opacity: 1;
+      }
+      80% {
+        width: 100%;
+        opacity: 1;
+      }
+      100% {
+        width: 100%;
+        opacity: 1;
+      }
+    }
+
+    @keyframes blink-caret {
+      0%, 100% {
+        border-color: transparent;
+      }
+      50% {
+        border-color: #fff;
+      }
+    }
+
+    /* New styles for the moving gesture */
+    .gesture-container {
+      position: absolute;
+      bottom: 230px;
+      right: 300px;
+      z-index: 9999;
+    }
+
+    .
+
+    @keyframes move-gesture {
+      0% {
+        transform: translateX(50px);
+      }
+      50% {
+        transform: translateX(330px);
+      }
+      100% {
+        transform: translateX(100);
+      }
+    }
+  </style>
+</head>
+<body>
+  <img class="moon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4Fz7jmnTgTsoNYY5i0SzQWc-4g7pCVAgxvDiKj95gqZERiGajoKz-9nSZ&s=10" alt="Moon Image">
+  <img class="sun" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk0Mnft8Tp8dRXra2CJ7xxFYbub8d1uMIDdA&usqp=CAU" alt="Sun Image">
+  <div id="messageContainer" class="message-container">
+    <p id="line1">In the final pages</p>
+    <p id="line2">of this chapter,</p>
+    <p id="line3">May your heart find</p>
+    <p id="line4">solace in the</p>
+    <p id="line5">simple beauty of</p>
+    <p id="line6">Shared smiles and</p>
+    <p id="line7">unspoken connections,</p>
+    <p id="line8">and as we turn</p>
+    <p id="line9">the calendar,</p>
+    <p id="line10">may the unwritten</p>
+    <p id="line11">stories of the</p>
+    <p id="line12">new year</p>
+    <p id="line13">hold promises that</p>
+    <p id="line14">resonate with the</p>
+    <p id="line15">very essence</p> 
+    <p id="line16">of your being!</p>
+  </div>
+
+  <div class="gesture-container">
+  <a class="gesture">Click Me For Fun</a>
+</div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const moonImage = document.querySelector(".moon");
+      const sunImage = document.querySelector(".sun");
+      const messageContainer = document.getElementById("messageContainer");
+      const lines = ['line1', 'line2', 'line3', 'line4', 'line5', 'line6', 'line7', 'line8', 'line9', 'line10', 'line11', 'line12', 'line13', 'line14', 'line15', 'line16'];
+      let currentLine = 0;
+
+      function showMessage() {
+        messageContainer.style.opacity = "1";
+        const messageInterval = setInterval(showLine, 1500); // Start typing animation
+      }
+
+      function updateBrightness() {
+        const currentTime = new Date().getSeconds();
+        const brightness = Math.min(100, Math.max(100, 50 - currentTime * (100 / 55)));
+        const filterValue = `brightness(${brightness}%)`;
+        document.body.style.filter = filterValue;
+      }
+
+      function showLine() {
+        const currentLineElement = document.getElementById(lines[currentLine]);
+        currentLineElement.style.animation = "typing 1.5s forwards";
+        currentLineElement.style.textDecoration = "none";  // Remove underline
+        currentLineElement.style.cursor = "none";          // Remove cursor
+        currentLine++;
+        if (currentLine >= lines.length) {
+          clearInterval(messageInterval);
+        }
+      }
+
+      function showSun() {
+        sunImage.style.opacity = "1";
+        moonImage.style.opacity = "0";
+        setTimeout(() => {
+          sunImage.style.filter = "brightness(100%)";
+          moonImage.style.filter = "brightness(0%)";
+        }, 1000);
+      }
+
+      const messageInterval = setInterval(showMessage, 3000);
+      setInterval(updateBrightness, 1000);
+      setTimeout(showSun, 8000);
+    });
+  </script>
+</body>
+</html>
